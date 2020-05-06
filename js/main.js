@@ -24,6 +24,7 @@ function toggleModal() {
  // функция для появления модального окна
 
  function toggleModalAuth() {
+  loginInput.style.borderColor = '';
   modalAuth.classList.toggle('is-open');
  }
 
@@ -41,7 +42,7 @@ function toggleModal() {
     checkAuth();
   }
 
-   console.log('Авто');
+   console.log('Авторизован');
    userName.textContent = login;
    buttonAuth.style.display = 'none';
    userName.style.display = 'inLine';
@@ -55,15 +56,19 @@ function toggleModal() {
 
   function LogIn(event) {
     event.preventDefault();
-    login = loginInput.value;
-    localStorage.setItem('delivery', login);
-
-    toggleModalAuth();
-    buttonAuth.removeEventListener('click', toggleModalAuth);
-    buttonCloseAuth.removeEventListener('click', toggleModalAuth);
-    loginInForm.removeEventListener('submit', LogIn);
-    loginInForm.reset();
-    checkAuth();
+    if (loginInput.value.trim()) {
+      login = loginInput.value;
+      localStorage.setItem('delivery', login);
+  
+      toggleModalAuth();
+      buttonAuth.removeEventListener('click', toggleModalAuth);
+      buttonCloseAuth.removeEventListener('click', toggleModalAuth);
+      loginInForm.removeEventListener('submit', LogIn);
+      loginInForm.reset();
+      checkAuth();
+    } else {
+      loginInput.style.borderColor = 'red';
+    } 
   }
 
   buttonAuth.addEventListener('click', toggleModalAuth);
